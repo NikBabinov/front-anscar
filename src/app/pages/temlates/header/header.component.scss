@@ -1,0 +1,25 @@
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 20px 0;
+  min-height: 20vh;
+}
+
+.header__logo {
+  display: flex;
+  width: 20%;
+  height: 100%;
+  margin-left: 3%;
+}
+
+.header__authorization-img,
+.header__logo-img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.header__authorization-button {
+  margin-right: 3%;
+}

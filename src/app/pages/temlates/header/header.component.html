@@ -1,0 +1,17 @@
+<header class="header">
+  <div class="header__container container">
+
+    <div class="header__logo">
+      <a routerLink="/">
+        <img src="/images/anscar_logo.png" alt="anscar" class="header__logo-img">
+      </a>
+    </div>
+
+      <a (click)="openAuthorizationForm()" class="header__authorization-button button" *ngIf="isShowAuthorizationButton">
+        <div class="header__authorization">
+          <img src="/images/authorization.png" alt="authorization" class="header__authorization-img">
+        </div>
+      </a>
+
+  </div>
+</header>

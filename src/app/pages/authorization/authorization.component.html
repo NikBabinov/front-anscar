@@ -1,0 +1,51 @@
+<div class="main" id="main">
+  <div class="main__container container">
+    <div class="user-authorization" id="user-authorization">
+      <form action="" spellcheck="false" class="user-authorization__form" id="user-authorization__form">
+
+        <legend class="user-authorization__legend" id="user-authorization__legend">
+          {{ TEXT_CONSTANTS_FORM.USER_AUTHORIZATION_LEGEND }}
+        </legend>
+
+        <div class="user-authorization__field">
+          <label class="user-authorization__label" id="user-email_label" for="user-authorization__email" #emailLabel>
+            {{ TEXT_CONSTANTS_FORM.USER_FORM_EMAIL }}
+          </label>
+          <input type="email" class="user-authorization__input" id="user-authorization__email" #email>
+        </div>
+
+        <div class="user-authorization__field">
+          <label class="user-authorization__label" id="user-password__label" for="user-authorization__password" #passwordLabel>
+            {{ TEXT_CONSTANTS_FORM.USER_FORM_PASSWORD }}
+          </label>
+          <input class="user-authorization__input" id="user-authorization__password"
+                 [type]="isShowAuthorizationPassword ? 'text' : 'password'" #password>
+        </div>
+
+        <div class="user-authorization__action">
+          <div class="user-authorization__checkbox">
+            <label class="user-authorization__label-checkbox" for="user-authorization__password-show">
+              {{ TEXT_CONSTANTS_FORM.USER_FORM_PASSWORD_SHOW }}
+            </label>
+            <input type="checkbox" (click)="showAuthorizationPassword()"
+                   class="user-authorization__checkbox" id="user-authorization__password-show">
+          </div>
+
+          <div class="user-authorization__recover-password">
+            <div class="user-authorization__registration-link" (click)="openRegistrationUserForm()">
+              {{ TEXT_CONSTANTS_FORM.USER_FORM_REGISTRATION }}
+            </div>
+            <div class="recover-password__link" (click)="openRecoveryUserForm()">
+              {{ TEXT_CONSTANTS_FORM.USER_FORM_RESET_PASSWORD }}
+            </div>
+          </div>
+
+          <div (click)="checkValidForms()" class="user-authorization__button button" id="user-authorization__button">
+            {{ TEXT_CONSTANTS_FORM.USER_FORM_ENTER_BUTTON }}
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

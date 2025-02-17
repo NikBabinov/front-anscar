@@ -1,0 +1,43 @@
+<div class="main" id="main">
+  <div class="main__container container">
+    <div class="user-registration" id="user-registration">
+      <form action="" spellcheck="false" class="user-registration__form" id="user-registration__form">
+        <legend class="user-registration__legend" id="user-registration__legend">
+          {{ TEXT_FORM_CONSTANT.USER_REGISTRATION_LEGEND }}
+        </legend>
+        <div class="user-registration__field">
+          <label class="user-registration__label" id="user-email_label" for="user-registration__email" #emailLabel>
+            {{ TEXT_FORM_CONSTANT.USER_FORM_EMAIL }}
+          </label>
+          <input type="email" class="user-registration__input" id="user-registration__email" #email>
+        </div>
+        <div class="user-registration__field">
+          <label class="user-registration__label" id="user-password__label" for="user-registration__password" #passwordLabel>
+            {{ TEXT_FORM_CONSTANT.USER_FORM_PASSWORD }}
+          </label>
+          <input [type]="isShowAuthorizationPassword ? 'text' : 'password'" class="user-registration__input" id="user-registration__password"
+                 placeholder={{TEXT_FORM_CONSTANT.USER_FORM_PASSWORD_PLACEHOLDER}} #password>
+        </div>
+        <div class="user-registration__field">
+          <label class="user-registration__label" for="user-registration__password-repeat" #passwordRepeatLabel>
+            {{ TEXT_FORM_CONSTANT.USER_FORM_REPEAT_PASSWORD }}
+          </label>
+          <input [type]="isShowAuthorizationPassword ? 'text' : 'password'"
+                 class="user-registration__input" id="user-registration__password-repeat" #passwordRepeat>
+        </div>
+        <div class="user-registration__action">
+          <div class="user-registration__checkbox">
+            <label class="user-registration__label-checkbox" for="user-registration__password-show">
+              {{ TEXT_FORM_CONSTANT.USER_FORM_PASSWORD_SHOW }}
+            </label>
+            <input type="checkbox" (click)="showAuthorizationPassword()"
+                   class="user-registration__checkbox" id="user-registration__password-show">
+          </div>
+          <div class="user-registration__button button" (click)="checkValidForms()" id="user-registration__button">
+            {{ TEXT_FORM_CONSTANT.USER_FORM_REGISTRATION_BUTTON }}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

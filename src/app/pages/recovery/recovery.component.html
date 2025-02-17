@@ -1,0 +1,23 @@
+<div class="main" id="main">
+  <div class="main__container container">
+    <div class="user-recovery" id="user-recovery">
+      <form action="" spellcheck="false" class="user-recovery__form" id="user-recovery__form">
+        <legend class="user-recovery__legend" id="user-recovery__legend">
+          {{TEXT_CONSTANTS_FORM.USER_RECOVERY_LEGEND}}
+        </legend>
+        <div class="user-recovery__field">
+          <label class="user-recovery__label" id="user-email_label" for="user-recovery__email" #emailLabel>
+            {{TEXT_CONSTANTS_FORM.USER_FORM_EMAIL}}
+          </label>
+          <input type="email" class="user-recovery__input" id="user-recovery__email" #email>
+        </div>
+
+        <div class="user-recovery__action">
+          <div class="user-recovery__button button" id="user-recovery__button" (click)="recoveryPassword()">
+            {{TEXT_CONSTANTS_FORM.USER_FORM_RECOVERY_BUTTON}}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

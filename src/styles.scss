@@ -1,1 +1,126 @@
-/* You can add global styles to this file, and also import other style files */
+//zero style
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.htm,
+.body {
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(229, 229, 229, 1) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  border: 1px solid black;
+  padding: 0.3rem;
+  border-radius: 4px;
+  box-shadow: 3px 3px 3px 2px #696969;
+  transition-property: box-shadow;
+  transition-duration: 0.3s;
+
+  &:hover {
+    box-shadow: 4px 4px 4px 3px #696969;
+    transition-property: box-shadow;
+    transition-duration: 0.3s;
+  }
+}
