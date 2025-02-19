@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 export class RegistrationComponent {
   user: UserModel = {} as UserModel;
 
+  @ViewChild('nameLabel', { static: false }) nameLabel!: ElementRef;
+  @ViewChild('name', { static: false }) name!: ElementRef;
   @ViewChild('emailLabel', { static: false }) emailLabel!: ElementRef;
   @ViewChild('email', { static: false }) email!: ElementRef;
   @ViewChild('passwordLabel', { static: false }) passwordLabel!: ElementRef;
@@ -50,7 +52,7 @@ export class RegistrationComponent {
     if (emailValid && passwordValid && repeatPasswordValid) {
       this.resetEmailLabelStyles();
       this.resetPasswordLabelStyles();
-      this.register(); // Добавляем вызов метода регистрации
+      this.register();
     } else {
       if (!emailValid) {
         this.setEmailLabelFail();
@@ -103,6 +105,7 @@ export class RegistrationComponent {
   register(): void {
     this.user.email = this.email.nativeElement.value;
     this.user.password = this.password.nativeElement.value;
+    this.user.name = this.name.nativeElement.value;
 
     this.authService.register(this.user).subscribe({
       next: (data: UserModel) => {

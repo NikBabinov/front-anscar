@@ -12,7 +12,8 @@ export enum TextFormConstants {
   USER_FORM_RESET_PASSWORD = "сброс пароля",
   USER_FORM_ENTER_BUTTON = "войти",
   USER_FORM_RECOVERY_BUTTON = "восстановить",
-  USER_FORM_REGISTRATION_BUTTON = "зарегистрироваться"
+  USER_FORM_REGISTRATION_BUTTON = "зарегистрироваться",
+  USER_FORM_NAME = "Введите имя",
 
 
 }
