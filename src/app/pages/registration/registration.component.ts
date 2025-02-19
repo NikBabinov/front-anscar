@@ -30,6 +30,7 @@ export class RegistrationComponent {
   isShowAuthorizationPassword = false;
   isValidEmail = false;
   isValidPassword = false;
+  isUniqName = false;
 
   emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   defaultEmailLabel = this.TEXT_FORM_CONSTANT.USER_FORM_EMAIL;
@@ -65,6 +66,28 @@ export class RegistrationComponent {
       } else {
         this.resetPasswordLabelStyles();
       }
+    }
+  }
+
+  checkName(): void {
+    const username = this.user.name;
+    if (username) {
+      this.authService.checkUniqName(username).subscribe({
+        next: (isUnique: boolean) => {
+          this.isUniqName = isUnique;
+          if (!isUnique) {
+            this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_BLACK);
+            console.log('Username is already taken');
+          }
+        },
+        error: (error) => {
+          this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_RED);
+          console.error('Error checking username uniqueness', error);
+        }
+      });
+    } else {
+      this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_RED);
+      console.error('Username is undefined');
     }
   }
 

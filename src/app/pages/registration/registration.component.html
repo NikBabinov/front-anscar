@@ -37,6 +37,7 @@
         </div>
 
         <div class="user-registration__action">
+
           <div class="user-registration__checkbox">
             <label class="user-registration__label-checkbox" for="user-registration__password-show">
               {{ TEXT_FORM_CONSTANT.USER_FORM_PASSWORD_SHOW }}
@@ -44,9 +45,15 @@
             <input type="checkbox" (click)="showAuthorizationPassword()"
                    class="user-registration__checkbox" id="user-registration__password-show">
           </div>
+
+          <div class="user-registration__check-name button" (click)="checkName()">
+            {{ TEXT_FORM_CONSTANT.CHECK_NAME_BUTTON }}
+          </div>
+
           <div class="user-registration__button button" (click)="checkValidForms()" id="user-registration__button">
             {{ TEXT_FORM_CONSTANT.USER_FORM_REGISTRATION_BUTTON }}
           </div>
+
         </div>
 
       </form>
