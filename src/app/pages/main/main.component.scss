@@ -1,3 +1,26 @@
 .main {
-  min-height: 78.5vh;
+  font-size: 25px;
+
+  .main__container{
+    position: relative;
+    min-height: 78.5vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .intro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .action_user{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 2rem;
+    right: 5rem;
+  }
 }
+

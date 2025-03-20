@@ -1,0 +1,34 @@
+<div class="main" id="main">
+  <div class="main__container container">
+    <div class="user-info" id="user-info">
+      <form action="" spellcheck="false" class="user-info__form" id="user-info__form">
+        <legend class="user-info__legend" id="user-info__legend">
+          {{ TEXT_CONSTANTS_FORM.USER_INFO_LEGEND }}
+        </legend>
+        <div class="user-info__field">
+          <label class="user-info__label" id="user-name_label" for="user-info__name">
+            {{ TEXT_CONSTANTS_FORM.USER_INFO_NAME }}
+          </label>
+          <label class="user-info__email" id="user-info__name">
+              {{ currentUserName }}
+          </label>
+        </div>
+
+        <div class="user-info__field">
+          <label class="user-info__label" id="user-email_label" for="user-info__email">
+            {{ TEXT_CONSTANTS_FORM.USER_INFO_EMAIL }}
+          </label>
+          <label class="user-info__email" id="user-info__email">
+            {{ currentUserEmail }}
+          </label>
+        </div>
+
+        <div class="user-info__action">
+          <div (click)="logOut()" class="user-info__button button" id="user-info__button">
+            {{ TEXT_CONSTANTS_FORM.USER_FORM_LOGOUT_BUTTON }}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

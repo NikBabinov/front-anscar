@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { UserModel } from '../../model/user.model';
 import { AuthService } from '../../service/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { AuthResponse } from '../../model/auth-response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -31,6 +33,7 @@ export class RegistrationComponent {
   isValidEmail = false;
   isValidPassword = false;
   isUniqName = false;
+  isUniqEmail = false;
 
   emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   defaultEmailLabel = this.TEXT_FORM_CONSTANT.USER_FORM_EMAIL;
@@ -39,7 +42,11 @@ export class RegistrationComponent {
   private readonly COLOR_RED = 'red';
   private readonly COLOR_BLACK = 'black';
 
-  constructor(private _router: Router, private renderer: Renderer2, private authService: AuthService) {}
+  constructor(
+    private _router: Router,
+    private renderer: Renderer2,
+    private authService: AuthService
+  ) {}
 
   showAuthorizationPassword(): void {
     this.isShowAuthorizationPassword = !this.isShowAuthorizationPassword;
@@ -66,28 +73,6 @@ export class RegistrationComponent {
       } else {
         this.resetPasswordLabelStyles();
       }
-    }
-  }
-
-  checkName(): void {
-    const username = this.user.name;
-    if (username) {
-      this.authService.checkUniqName(username).subscribe({
-        next: (isUnique: boolean) => {
-          this.isUniqName = isUnique;
-          if (!isUnique) {
-            this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_BLACK);
-            console.log('Username is already taken');
-          }
-        },
-        error: (error) => {
-          this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_RED);
-          console.error('Error checking username uniqueness', error);
-        }
-      });
-    } else {
-      this.renderer.setStyle(this.nameLabel.nativeElement, 'color', this.COLOR_RED);
-      console.error('Username is undefined');
     }
   }
 
@@ -131,16 +116,21 @@ export class RegistrationComponent {
     this.user.name = this.name.nativeElement.value;
 
     this.authService.register(this.user).subscribe({
-      next: (data: UserModel) => {
-        console.log('Registration successful', data);
+      next: (response: AuthResponse) => {
+        console.log('Registration successful', response.user);
         this._router.navigate(['/']).then(() => {
           console.log('Navigation successful');
         }).catch(error => {
           console.error('Navigation error', error);
         });
       },
-      error: (error: any) => {
-        console.error('Registration error', error);
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 409) {
+          this.setEmailLabelFail();
+          console.error('Email is already in use');
+        } else {
+          console.error('Registration error', error);
+        }
       },
       complete: () => {
         console.log('Registration request completed');

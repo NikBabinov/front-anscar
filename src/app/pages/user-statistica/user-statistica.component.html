@@ -1,0 +1,30 @@
+<div class="main">
+  <div class="main__container container">
+
+
+      <div class="user-statistical">
+
+        <div class="user-statistical__header">{{ TEXT_CONSTANTS.USER_STATISTICA_HEADER }}</div>
+
+        <div class="user-statistical__field">
+          <div class="user-statistical__field_label user-statistical__field-level-label" #field_Level_Label></div>
+          <div class="user-statistical__field-level_out" #field_Level_out *ngIf="isLoadingDataFromServer"></div>
+        </div>
+
+        <div class="user-statistical__field">
+          <div class="user-statistical__field_label user-statistical__field-total-count-solution-task_label" #field_total_count_solution_task_label></div>
+          <div class="user-statistical__field_total_count_solution_task_out" #field_total_count_solution_task_out *ngIf="isLoadingDataFromServer"></div>
+        </div>
+
+        <div class="user-statistical__field">
+          <div class="user-statistical__field_label user-statistical__field_completed_task_first_time_label" #field_completed_task_first_time_label></div>
+          <div class="user-statistical__field_completed_task_first_time_out" #field_completed_task_first_time_out *ngIf="isLoadingDataFromServer"></div>
+        </div>
+      </div>
+
+    <section *ngIf="!isLoadingDataFromServer">
+      Загрузка Данных
+    </section>
+
+  </div>
+</div>

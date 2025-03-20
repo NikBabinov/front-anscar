@@ -1,7 +1,20 @@
 <main class="main">
   <div class="main__container container">
     <section class="intro">
-      <div class="intro__text">{{welcomeMessage}}</div>
+      <div class="intro__text" [innerHTML]="welcomeMessage"></div>
     </section>
+
+    <section class="action_user" *ngIf='isAuthenticated'>
+
+      <div (click)="redirectToStatisticalUser()" class="user-info__button button" id="user-info__button" *ngIf="role === 'ROLE_USER'">
+        {{ TEXT_CONSTANTS_FORM.USER_INFO_BUTTON }}
+      </div>
+
+      <div class="user-admin__button button" *ngIf="role === 'ROLE_ADMIN'">
+        {{TEXT_CONSTANTS_FORM.USER_ADMIN_BUTTON}}
+      </div>
+
+    </section>
+
   </div>
 </main>

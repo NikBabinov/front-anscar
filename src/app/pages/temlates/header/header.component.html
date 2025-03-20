@@ -13,5 +13,11 @@
         </div>
       </a>
 
+    <a (click)="openUserInfo()" class="header__authorization-button button" *ngIf="isShowUserName">
+      <div class="header__authorization">
+        <img src="/images/user_info.png" alt="authorization" class="header__log_out-img">
+      </div>
+    </a>
+
   </div>
 </header>

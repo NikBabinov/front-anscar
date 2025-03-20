@@ -1,8 +1,9 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { TextFormConstants } from '../../constants/text-form-constant';
-import { Router } from '@angular/router';
-import { AuthService } from '../../service/auth/auth.service';
-import { UserModel } from '../../model/user.model';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {TextFormConstants} from '../../constants/text-form-constant';
+import {Router} from '@angular/router';
+import {AuthService} from '../../service/auth/auth.service';
+import {UserModel} from '../../model/user.model';
+import {AuthResponse} from '../../model/auth-response.model';
 
 @Component({
   selector: 'app-authorization',
@@ -14,10 +15,10 @@ import { UserModel } from '../../model/user.model';
 export class AuthorizationComponent {
   user: UserModel = {} as UserModel;
 
-  @ViewChild('email', { static: false }) email!: ElementRef;
-  @ViewChild('emailLabel', { static: false }) emailLabel!: ElementRef;
-  @ViewChild('password', { static: false }) password!: ElementRef;
-  @ViewChild('passwordLabel', { static: false }) passwordLabel!: ElementRef;
+  @ViewChild('email', {static: false}) email!: ElementRef;
+  @ViewChild('emailLabel', {static: false}) emailLabel!: ElementRef;
+  @ViewChild('password', {static: false}) password!: ElementRef;
+  @ViewChild('passwordLabel', {static: false}) passwordLabel!: ElementRef;
 
   protected readonly TEXT_CONSTANTS_FORM = TextFormConstants;
   isShowAuthorizationPassword = false;
@@ -30,7 +31,8 @@ export class AuthorizationComponent {
   private readonly COLOR_RED = 'red';
   private readonly COLOR_BLACK = 'black';
 
-  constructor(private _router: Router, private renderer: Renderer2, private authService: AuthService) {}
+  constructor(private _router: Router, private renderer: Renderer2, private authService: AuthService) {
+  }
 
   showAuthorizationPassword(): void {
     this.isShowAuthorizationPassword = !this.isShowAuthorizationPassword;
@@ -42,7 +44,7 @@ export class AuthorizationComponent {
 
     if (emailValid && passwordValid) {
       this.resetLabelStyles();
-      this.authorize();
+      this.login();
     } else {
       if (!emailValid) {
         this.setEmailLabelFail();
@@ -113,13 +115,13 @@ export class AuthorizationComponent {
     this.renderer.setStyle(this.passwordLabel.nativeElement, 'color', this.COLOR_BLACK);
   }
 
-  private authorize(): void {
+  login(): void {
     this.user.email = this.email.nativeElement.value;
     this.user.password = this.password.nativeElement.value;
 
     this.authService.login(this.user).subscribe({
-      next: (data: UserModel) => {
-        console.log('Authorization successful', data);
+      next: (response: AuthResponse) => {
+        console.log('Login successful', response.user);
         this._router.navigate(['/']).then(() => {
           console.log('Navigation successful');
         }).catch(error => {
@@ -127,13 +129,18 @@ export class AuthorizationComponent {
         });
       },
       error: (error: any) => {
-        console.error('Authorization error', error);
+        console.error('Login error', error);
+        this.handleLoginError(error);
       },
       complete: () => {
-        console.log('Authorization request completed');
+        console.log('Login request completed');
       }
     });
   }
 
-
+  handleLoginError(error: any): void {
+    this.setEmailLabelFail();
+    this.setPasswordLabelFail();
+    console.error('Handling login error:', error);
+  }
 }
