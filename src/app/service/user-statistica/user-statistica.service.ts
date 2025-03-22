@@ -28,7 +28,6 @@ export class UserStatisticaService {
 
   getUserStatistical(email: string | undefined) {
     const params = new HttpParams().set('email', email || '');
-
     return this.http.get<UserStatistica>(`${environment.apiUrl}/user/statistica`, { params })
       .subscribe({
         next: (data) => this.currentStatisticalUser.next(data),

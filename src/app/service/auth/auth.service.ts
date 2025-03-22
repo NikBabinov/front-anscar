@@ -12,7 +12,7 @@ export class AuthService {
   public currentUser: Observable<UserModel | null>;
 
   constructor(private http: HttpClient) {
-    const user: UserModel | null = this.getUserFromCookies();
+    const user: UserModel | null = this.getUserFromLocalStorage();
     this.currentUserSubject = new BehaviorSubject<UserModel | null>(user);
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -21,7 +21,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/register`, user, {withCredentials: true})
       .pipe(map(response => {
         if (response) {
-          this.setUserToCookies(response.user);
+          this.setUserToLocalStorage(response.user);
           this.currentUserSubject.next(response.user);
         }
         return response;
@@ -32,7 +32,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, user, {withCredentials: true})
       .pipe(map(response => {
         if (response) {
-          this.setUserToCookies(response.user);
+          this.setUserToLocalStorage(response.user);
           this.currentUserSubject.next(response.user);
         }
         return response;
@@ -49,40 +49,42 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getTokenFromCookies();
+    return !!this.getUserData();
+  }
+
+
+  getRoleUser(): String | null {
+    const userFromLocalStorage: UserModel | null = this.getUserFromLocalStorage();
+    return userFromLocalStorage ? userFromLocalStorage?.role : null;
+  }
+
+  getUserData() {
+    const userFromLocalStorage: UserModel | null = this.getUserFromLocalStorage();
+    return userFromLocalStorage ? userFromLocalStorage : null;
   }
 
   // method to work in cookies
 
-  private getTokenFromCookies(): string | null {
-    const cookies: string[] = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'token') {
-        return value;
+
+  private setUserToLocalStorage(user: UserModel): void {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  private getUserFromLocalStorage(): UserModel | null {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      try {
+        return JSON.parse(userString) as UserModel;
+      } catch (error) {
+        console.error('Error parsing user from localStorage:', error);
+        return null;
       }
     }
     return null;
   }
 
-  private setUserToCookies(user: UserModel): void {
-    const userString: string = encodeURIComponent(JSON.stringify(user));
-    document.cookie = `user=${userString}; path=/; SameSite=Strict`;
-  }
-
-  private getUserFromCookies(): UserModel | null {
-    const cookies: string[] = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'user') {
-        return JSON.parse(decodeURIComponent(value)) as UserModel;
-      }
-    }
-    return null;
-  }
 
   private removeUserFromCookies(): void {
-    document.cookie = 'user=; path=/; Max-Age=0; SameSite=Strict';
-    document.cookie = 'token=; path=/; Max-Age=0; SameSite=Strict';
+    localStorage.removeItem('user')
   }
 }

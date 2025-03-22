@@ -31,6 +31,7 @@ export class MainComponent implements OnInit {
   }
 
   redirectToStatisticalUser() {
+    console.log("redirectToStatisticalUser");
     this.route.navigate(['/user-statistica']).then();
   }
 }
