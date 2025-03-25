@@ -5,13 +5,14 @@ import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {UserModel} from '../../model/user.model';
 import {AuthResponse} from '../../model/auth-response.model';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   private currentUserSubject: BehaviorSubject<UserModel | null>;
   public currentUser: Observable<UserModel | null>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private _router: Router) {
     const user: UserModel | null = this.getUserFromLocalStorage();
     this.currentUserSubject = new BehaviorSubject<UserModel | null>(user);
     this.currentUser = this.currentUserSubject.asObservable();
@@ -40,9 +41,18 @@ export class AuthService {
   }
 
   logout(): void {
-    this.removeUserFromCookies();
-    this.currentUserSubject.next(null);
+    this.http.post(`${environment.apiUrl}/logout`, {withCredentials: true}).subscribe({
+      next: (response: any) => {
+        this.removeUserFromCookies(); // "Logout successful"
+        this.currentUserSubject.next(null); // Очистите токен из хранилища
+        this._router.navigate(['/']); // Перенаправление на страницу входа
+      },
+      error: (err) => {
+        console.error('Error during logout:', err);
+      }
+    });
   }
+
 
   recoverUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${environment.apiUrl}/auth/recovery`, user, {withCredentials: true});

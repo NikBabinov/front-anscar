@@ -1,1 +1,15 @@
-<p>admin-panel works!</p>
+
+<div class="main" id="main">
+  <div class="main__container container">
+    <div class="user-info">
+      <section class="loading-info" *ngIf="userStatisticaList.length == 0">Загрузка данных</section>
+      <section class="load-info" *ngIf="userStatisticaList.length > 0">
+        <ul>
+          <li *ngFor="let user of userStatisticaList">
+            {{ user.name }}: {{ user.role }}
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>

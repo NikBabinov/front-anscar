@@ -26,12 +26,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   logOut():void{
-    this.authService.logout()
-    this._router.navigate(['/']).then(() => {
-      console.log('Navigation successful');
-    }).catch(error => {
-      console.error('Navigation error', error);
-    });
+    this.authService.logout();
   }
 
 }
