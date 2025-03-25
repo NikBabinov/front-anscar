@@ -5,6 +5,7 @@ import {RecoveryComponent} from './pages/recovery/recovery.component';
 import {RegistrationComponent} from './pages/registration/registration.component';
 import {UserInfoComponent} from './pages/user-info/user-info.component';
 import {UserStatisticaComponent} from './pages/user-statistica/user-statistica.component';
+import {AdminPanelComponent} from './pages/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
   {path: '', component: MainComponent},
@@ -13,4 +14,5 @@ export const routes: Routes = [
   {path:'recovery', component: RecoveryComponent},
   {path:'user-info', component: UserInfoComponent},
   {path:'user-statistica', component: UserStatisticaComponent},
+  {path:'admin-panel', component: AdminPanelComponent},
 ];

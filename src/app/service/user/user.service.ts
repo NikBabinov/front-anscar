@@ -16,16 +16,12 @@ export class UserService {
   }
 
   getCurrentUserName(): string | undefined {
-    if (!this.user) {
-      this.loadUserFromLocalStorage();
-    }
+    this.loadUserFromLocalStorage();
     return this.user?.name;
   }
 
   getCurrentUserEmail(): string | undefined {
-    if (!this.user) {
-      this.loadUserFromLocalStorage();
-    }
+    this.loadUserFromLocalStorage();
     return this.user?.email;
   }
 }

@@ -10,8 +10,8 @@
         {{ TEXT_CONSTANTS_FORM.USER_INFO_BUTTON }}
       </div>
 
-      <div class="user-admin__button button" *ngIf="role === 'ROLE_ADMIN'">
-        {{TEXT_CONSTANTS_FORM.USER_ADMIN_BUTTON}}
+      <div (click)="redirectToAdminPanel()" class="user-admin__button button" *ngIf="role === 'ROLE_ADMIN'">
+        {{ TEXT_CONSTANTS_FORM.USER_ADMIN_BUTTON }}
       </div>
 
     </section>
