@@ -43,9 +43,9 @@ export class AuthService {
   logout(): void {
     this.http.post(`${environment.apiUrl}/logout`, {withCredentials: true}).subscribe({
       next: (response: any) => {
-        this.removeUserFromCookies(); // "Logout successful"
-        this.currentUserSubject.next(null); // Очистите токен из хранилища
-        this._router.navigate(['/']); // Перенаправление на страницу входа
+        this.removeUserFromCookies();
+        this.currentUserSubject.next(null);
+        this._router.navigate(['/']);
       },
       error: (err) => {
         console.error('Error during logout:', err);

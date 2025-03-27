@@ -121,9 +121,7 @@ export class AuthorizationComponent {
 
     this.authService.login(this.user).subscribe({
       next: (response: AuthResponse) => {
-        console.log('Login successful', response.user);
         this._router.navigate(['/']).then(() => {
-          console.log('Navigation successful');
         }).catch(error => {
           console.error('Navigation error', error);
         });
@@ -131,9 +129,6 @@ export class AuthorizationComponent {
       error: (error: any) => {
         console.error('Login error', error);
         this.handleLoginError(error);
-      },
-      complete: () => {
-        console.log('Login request completed');
       }
     });
   }
