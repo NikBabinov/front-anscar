@@ -1,14 +1,38 @@
-
 <div class="main" id="main">
   <div class="main__container container">
     <div class="user-info">
-      <section class="loading-info" *ngIf="userStatisticaList.length == 0">Загрузка данных</section>
-      <section class="load-info" *ngIf="userStatisticaList.length > 0">
+      <section class="loading-info" *ngIf="userStatisticaList.length == 0">Загрузка данных...</section>
+
+      <section class="load-info" *ngIf="userStatisticaList.length > 0 && isShowUsersTable">
         <ul>
+          <div class="table table_header">
+            <section class="table-column table-column_header">имя</section>
+            <section class="table-column table-column_header">email</section>
+            <section class="table-column table-column_header">роль</section>
+          </div>
           <li *ngFor="let user of userStatisticaList">
-            {{ user.name }}: {{ user.role }}
+            <section class="table-row"
+                     (click)="setUserEmail(user.email)"
+                     [style.background-color]="selectedUserEmail === user.email ? '#a9a7a7' : ''">
+              <section class="table-column table-column_name">{{ user.name }}</section>
+              <section class="table-column table-column_email">{{ user.email }}</section>
+              <section class="table-column table-column_role">{{ user.role }}</section>
+            </section>
           </li>
         </ul>
+
+        <div (click)="getDataUser(selectedUserEmail)" class="button button_user-info">детальная информация</div>
+      </section>
+
+      <section class="detail-user" *ngIf="!isShowUsersTable && user != null">
+        <div class="detail-user_row detail-user_row-name">Имя : {{user.name}}</div>
+        <div class="detail-user_row detail-user_row-email">email : {{user.email}}</div>
+        <div class="detail-user_row detail-user_row-role">Роль : {{user.role}}</div>
+        <div class="detail-user_row detail-user_row-level">Уровень : {{user.level}}</div>
+        <div class="detail-user_row detail-user_row-numb-sucess-target">Количество успешно решенных задач : {{user.countSolutionTask}}</div>
+        <div class="detail-user_row detail-user_row-numb-sucess-first-target">Количество успешно решенных задач с первой попытки :{{user.solutionTaskFirstTime}}</div>
+        <div class="detail-user_row detail-user_row-data">Дата создания пользователя : {{user.userCreateDate}}</div>
+        <div class="button button_back" (click)="back()">Назад</div>
       </section>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AdminPanelService} from '../../service/admin-panel/admin-panel.service';
 import {UserStatistica} from '../../model/user-statistical.model';
 import {NgForOf, NgIf} from '@angular/common';
@@ -13,26 +13,51 @@ import {NgForOf, NgIf} from '@angular/common';
   standalone: true,
   styleUrl: './admin-panel.component.scss'
 })
-export class AdminPanelComponent implements OnInit,AfterViewInit {
-  userStatisticaList : UserStatistica[] = [];
+export class AdminPanelComponent implements OnInit, AfterViewInit {
+  isShowUsersTable: boolean = true;
+  userStatisticaList: UserStatistica[];
+  selectedUserEmail: String = "";
+  user: UserStatistica | null = null;
 
-  constructor(private adminPanelService: AdminPanelService) {
+  constructor(private adminPanelService: AdminPanelService
+    , private cdr: ChangeDetectorRef) {
+    this.userStatisticaList = [];
   }
 
   ngOnInit() {
-    console.log("init admin service");
     this.adminPanelService.getAllUsersStatistica();
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
+    this.isShowUsersTable = true;
     this.adminPanelService.currentListUsersStatistica.subscribe({
-      next : (userStatistica:UserStatistica[]) =>{
+      next: (userStatistica: UserStatistica[]) => {
         this.userStatisticaList = userStatistica;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Ошибка при получении данных пользователя:', err);
       }
     })
+  }
+
+  setUserEmail(selectedUserEmail: String) {
+    this.selectedUserEmail = selectedUserEmail;
+  }
+
+  getDataUser(selectedUserEmail: String) {
+    if (selectedUserEmail) {
+      this.isShowUsersTable = false;
+      for (let user of this.userStatisticaList) {
+        if (selectedUserEmail == user.email) {
+          this.user = user;
+        }
+      }
+    }
+  }
+
+  back() {
+    this.isShowUsersTable = true;
   }
 
 }
