@@ -1,10 +1,25 @@
-import {HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-  const clonedRequest: HttpRequest<any> = req.clone({
-    withCredentials: true // Cookies автоматически добавляются в запрос
-  });
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private router: Router) {}
 
-  return next(clonedRequest);
-};
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const clonedRequest: HttpRequest<any> = req.clone({
+      withCredentials: true,
+    });
+
+    return next.handle(clonedRequest).pipe(
+      catchError((error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/authorization']);
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+}
